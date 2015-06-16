@@ -1,0 +1,3 @@
+SB_HOME=/opt/sickbeard/
+SB_DATA=/home/vagrant/.sickbeard/
+SB_USER=vagrant
