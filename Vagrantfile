@@ -20,6 +20,7 @@ Vagrant.configure(2) do |config|
     # within the machine from a port on the host machine. In the example below,
     # accessing "localhost:8080" will access port 80 on the guest machine.
 
+    nzb.vm.network "forwarded_port", guest: 5050, host: 5050
     nzb.vm.network "forwarded_port", guest: 8080, host: 8080
     nzb.vm.network "forwarded_port", guest: 8081, host: 8081
     nzb.vm.network "forwarded_port", guest: 8181, host: 8181
@@ -56,12 +57,12 @@ Vagrant.configure(2) do |config|
     nzb.vm.provision "shell", path: "scripts/sabnzbd.sh"
     nzb.vm.provision "shell", path: "scripts/sickbeard.sh"
     nzb.vm.provision "shell", path: "scripts/headphones.sh"
+    nzb.vm.provision "shell", path: "scripts/couchpotato.sh"
   end
 
   config.vm.define "plex" do |plex|
     plex.vm.box = "ubuntu/trusty64"
 
-    plex.vm.network "forwarded_port", guest: 80, host: 80
     plex.vm.network "forwarded_port", guest: 32400, host: 32400
 
     plex.vm.provision "shell", path: "scripts/system.sh"
