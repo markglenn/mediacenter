@@ -1,7 +1,7 @@
 echo "Installing plexupdate"
 
 if [ ! -d "/opt/plexupdate.git" ]; then
-  git clone https://github.com/markglenn/plexupdate.git /opt/plexupdate
+  git clone https://github.com/mrworf/plexupdate.git /opt/plexupdate
 else
   # Directory already exists.  Hard reset the repo
   cd /opt/plexupdate
