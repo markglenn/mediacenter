@@ -6,7 +6,7 @@ else
   # Directory already exists.  Hard reset the repo
   cd /opt/headphones
   git fetch
-  git reset --hard origin/master
+  git reset --hard @{u}
 fi
 
 chown -R vagrant:vagrant /opt/headphones
