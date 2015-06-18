@@ -1,6 +1,6 @@
 echo "Installing plexupdate"
 
-if [ ! -d "/opt/plexupdate.git" ]; then
+if [ ! -d "/opt/plexupdate" ]; then
   git clone https://github.com/mrworf/plexupdate.git /opt/plexupdate
 else
   # Directory already exists.  Hard reset the repo
@@ -12,4 +12,4 @@ fi
 chown -R vagrant:vagrant /opt/plexupdate
 
 cd /opt/plexupdate
-./plexupdate.sh -p -a
+./plexupdate.sh -p -a || true
