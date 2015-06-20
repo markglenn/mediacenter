@@ -1,30 +1,20 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# All Vagrant configuration is done below. The "2" in Vagrant.configure
-# configures the configuration version (we support older styles for
-# backwards compatibility). Please don't change it unless you know what
-# you're doing.
+FileUtils.cp 'vagrant_config_example.rb', 'vagrant_config.rb' unless File.exists?('vagrant_config.rb')
+require './vagrant_config'
+
 Vagrant.configure(2) do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
   config.vm.box = "ubuntu/trusty64"
-  config.vm.hostname = "media"
+  config.vm.hostname = HOSTNAME
 
-  # Disable automatic box update checking. If you disable this, then
-  # boxes will only be checked for updates when the user runs
-  # `vagrant box outdated`. This is not recommended.
-  # config.vm.box_check_update = false
-
-  # Create a forwarded port mapping which allows access to a specific port
-  # within the machine from a port on the host machine. In the example below,
-  # accessing "localhost:8080" will access port 80 on the guest machine.
-
-  config.vm.network "forwarded_port", guest: 5050, host: 5050
-  config.vm.network "forwarded_port", guest: 8080, host: 8080
-  config.vm.network "forwarded_port", guest: 8081, host: 8081
-  config.vm.network "forwarded_port", guest: 8181, host: 8181
-  config.vm.network "forwarded_port", guest: 32400, host: 32400
+  config.vm.network "forwarded_port", guest: 5050, host: 5050 if USE_COUCHPOTATO
+  config.vm.network "forwarded_port", guest: 8080, host: 8080 if USE_SABNZBD
+  config.vm.network "forwarded_port", guest: 8081, host: 8081 if USE_SICKBEARD
+  config.vm.network "forwarded_port", guest: 8181, host: 8181 if USE_HEADPHONES
+  config.vm.network "forwarded_port", guest: 32400, host: 32400 if USE_PLEX
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -39,27 +29,26 @@ Vagrant.configure(2) do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder "./downloads", "/home/vagrant/Downloads", :create => true
+
+  # Holds the configuration scripts for provisioning
   config.vm.synced_folder "./config", "/opt/config"
 
-  # Provider-specific configuration so you can fine-tune various
-  # backing providers for Vagrant. These expose provider-specific options.
-  # Example for VirtualBox:
-  #
+  config.vm.synced_folder DOWNLOAD_PATH,  VM_DOWNLOAD_PATH, :create => true
+  config.vm.synced_folder MUSIC_PATH,     VM_MUSIC_PATH,    :create => true
+  config.vm.synced_folder TV_PATH,        VM_TV_PATH,       :create => true
+  config.vm.synced_folder MOVIE_PATH,     VM_MOVIE_PATH,    :create => true
+
+  # Configure virtualbox
   config.vm.provider "virtualbox" do |vb|
     # Customize the amount of memory on the VM:
-    vb.memory = "2048"
-    vb.cpus = 2
+    vb.memory = VM_MEMORY
+    vb.cpus = VM_CPUS
   end
 
-  #
-  # View the documentation for the provider you are using for more
-  # information on available options.
-
   config.vm.provision "shell", path: "scripts/system.sh"
-  config.vm.provision "shell", path: "scripts/sabnzbd.sh"
-  config.vm.provision "shell", path: "scripts/sickbeard.sh"
-  config.vm.provision "shell", path: "scripts/headphones.sh"
-  config.vm.provision "shell", path: "scripts/couchpotato.sh"
-  config.vm.provision "shell", path: "scripts/plex.sh"
+  config.vm.provision "shell", path: "scripts/sabnzbd.sh" if USE_SABNZBD
+  config.vm.provision "shell", path: "scripts/sickbeard.sh" if USE_SICKBEARD
+  config.vm.provision "shell", path: "scripts/headphones.sh" if USE_HEADPHONES
+  config.vm.provision "shell", path: "scripts/couchpotato.sh" if USE_COUCHPOTATO
+  config.vm.provision "shell", path: "scripts/plex.sh" if USE_PLEX
 end

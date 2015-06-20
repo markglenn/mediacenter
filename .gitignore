@@ -1,2 +1,6 @@
 .vagrant
+vagrant_config.rb
+
+# Example directories
 downloads
+media
