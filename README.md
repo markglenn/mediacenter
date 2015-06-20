@@ -32,3 +32,7 @@ git clone https://github.com/markglenn/mediacenter.git
 cd mediacenter
 vagrant up
 ```
+
+## License
+
+[BSD](https://github.com/markglenn/mediacenter/blob/master/LICENSE.md)
