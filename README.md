@@ -1,4 +1,4 @@
-# mediacenter
+# [mediacenter](http://markglenn.github.io/mediacenter)
 
 mediacenter is a vagrant setup to build a media center server.
 
