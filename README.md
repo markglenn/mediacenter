@@ -14,7 +14,7 @@ Includes the following services:
 The server also includes Plex with enough power to handle 4
 streams simultaneously.  This by default sets up two cores
 and two gigabytes of RAM.  This is based on
-[recommendions by Plex](https://support.plex.tv/hc/en-us/articles/200375666-Stand-Alone-Server).
+[recommendations by Plex](https://support.plex.tv/hc/en-us/articles/200375666-Stand-Alone-Server).
 
 * [Plex](https://plex.tv)
 
